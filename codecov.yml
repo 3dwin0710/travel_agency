@@ -1,0 +1,5 @@
+codecov:
+    token: ${{secrets.CODECOV_TOKEN}}
+
+bash:
+    - ./.github/workflows/build.yml
