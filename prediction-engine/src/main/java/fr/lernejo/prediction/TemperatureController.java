@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 public class TemperatureController {
+
     private final List<String> list_of_data = new ArrayList<>();
     private final long Date_Today =System.currentTimeMillis();
     private final long Date_Yesterday = System.currentTimeMillis()- 1000L * 60L * 60L * 24L;
