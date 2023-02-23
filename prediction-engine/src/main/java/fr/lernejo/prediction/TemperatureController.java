@@ -1,9 +1,9 @@
 package fr.lernejo.prediction;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +27,17 @@ public class TemperatureController {
         java.sql.Date date = new java.sql.Date(Date_Today);
         java.sql.Date yesterday =  new java.sql.Date(Date_Yesterday);
         TemperatureService service = new TemperatureService();
-        String prefeature = "\n\t\t{\n\t\t\t\"date\":\""+date+"\",\n\t\t\t\"temperature\": "+service.getTemperature(country)+"\n\t\t}";
-        String prefeaturas = "\n\t\t{\n\t\t\t\"date\":\""+yesterday+"\",\n\t\t\t\"temperature\": "+service.getTemperature(country)+"\n\t\t}\n\n\t";
-        list_of_data.add(prefeature);
-        list_of_data.add(prefeaturas);
+        try {
+            String prefeature = "\n\t\t{\n\t\t\t\"date\":\"" + date + "\",\n\t\t\t\"temperature\": " + service.getTemperature(country) + "\n\t\t}";
+            String prefeaturas = "\n\t\t{\n\t\t\t\"date\":\"" + yesterday + "\",\n\t\t\t\"temperature\": " + service.getTemperature(country) + "\n\t\t}\n\n\t";
+            list_of_data.add(prefeature);
+            list_of_data.add(prefeaturas);
+        }catch (Exception e){
+            HttpStatus httpStatus = HttpStatus.valueOf(417);
+            String Message = "<p style=\"text-align: center\"><strong>The request failed with HTTP STATUS ";
+            return Message+String.valueOf(httpStatus)+"! </strong></p> <br/> "+new UnknownCountryException(country);
+        }
         return newFeatures(country,list_of_data);
     }
-
-
-
 
 }
