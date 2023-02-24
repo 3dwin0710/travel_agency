@@ -1,11 +1,7 @@
 package fr.lernejo.travelsite;
 
 import com.google.gson.Gson;
-import org.json.JSONObject;
-
 import com.google.gson.JsonObject;
-
-//import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +12,6 @@ public class SiteController {
     void savedata(@RequestBody String value){
         Gson gson = new Gson();
         JsonObject Objetjson = gson.fromJson(value, JsonObject.class);
-        System.out.println(Objetjson);
         String userName = Objetjson.get("userName").getAsString();
         String userEmail = Objetjson.get("userEmail").getAsString();
         String userCountry = Objetjson.get("userCountry").getAsString();
@@ -30,6 +25,7 @@ public class SiteController {
     @GetMapping("/api/travels")
     public String getUser(@RequestParam String userName)
     {
+        // Fixed data
         String Country = "France";
         double Temperature = 23.4;
         String AnotherCountry = "Allemagne";
